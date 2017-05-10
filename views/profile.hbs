@@ -3,3 +3,12 @@
 <p>{{email}}</p>
 
 <p><img src="{{picture_url}}"></p>
+
+{{#if login}}
+  {{> menu}}
+{{else}}
+  {{> login}}
+{{/if}}
+{{#if wrongPassword}}
+  <p>You entered an incorrect password</p>
+{{/if}}
