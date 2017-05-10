@@ -5,7 +5,7 @@
     <title>Create Blog Post</title>
   </head>
   <body>
-    <form action="/newblogpost{{url}}?password={{password}}" method="post">
+    <form action="/newblogpost/{{url}}?password={{password}}" method="post">
       <h1>New Blog Post</h1>
       {{#if login}}
         <p>Title: <input type="text" name="title" value=""></p>

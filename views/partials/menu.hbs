@@ -1,9 +1,9 @@
 <hr>
 <p>You are logged in as {{name}}</p>
-<p><a href ='/'>Back to index page</a></p>
-<p><a href="/newblogpost{{url}}?password={{password}}">Create blog post</a></p>
-<p><a href='/delete{{url}}?password={{password}}'>Delete my account</a>
+<p><a href ='/'>Log out</a></p>
+<p><a href="/newblogpost/{{url}}?password={{password}}">Create blog post</a></p>
+<p><a href='/delete/{{url}}?password={{password}}'>Delete my account</a>
 {{#if admin}}
   <p>Admin functionality</a>
-  <p><a href ='/adduser{{url}}?password={{password}}'>Add a new user</a></p>
+  <p><a href ='/adduser/{{url}}?password={{password}}'>Add a new user</a></p>
 {{/if}}

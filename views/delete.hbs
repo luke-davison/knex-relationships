@@ -5,10 +5,16 @@
     <title>Are you sure you want to delete your account?</title>
   </head>
   <body>
-    <h1>Are you sure?</h1>
-    <p>You will lose all of your profile information if you delete your account.</p>
-    <form action="/delete{{url}}?password={{password}}" method="post">
-      <input type="submit" name="" value="Delete my account">
-    </form>
+    {{#if login}}
+      <h1>Are you sure?</h1>
+      <p>You will lose all of your profile information if you delete your account.</p>
+      <p>Logged in as {{name}}</p>
+      <form action="/delete/{{url}}?password={{password}}" method="post">
+        <p><input type="submit" name="" value="Delete my account"></p>
+      </form>
+    {{else}}
+      <p>You cannot use this at this time.</p>
+      <p><a href='/'>Click here</a> to return to the index page.</p>
+    {{/if}}
   </body>
 </html>

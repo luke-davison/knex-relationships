@@ -12,36 +12,36 @@ module.exports = {
 
 function getUsers (connection) {
   return connection('users')
-    .join('profiles','users.id','profiles.user_id')
+    .join('profiles', 'users.id', 'profiles.user_id')
     .select()
-
 }
 
 function getUser (id, connection) {
-  return connection('users').where('id', id)
+  return connection('users')
+    .where('id', id)
 }
 
-function getOnePost(id, connection){
+function getOnePost (id, connection) {
   return connection('posts')
-  .join('users','posts.user_id','users.id')
+  .join('users', 'posts.user_id', 'users.id')
   .where('posts.id', id)
 }
 
-function getProfile (profileUrl, connection) {
+function getProfile (url, connection) {
   return connection('users')
     .join('profiles', 'users.id', 'profiles.user_id')
     .join('logins', 'users.id', 'logins.user_id')
-    .where('url', '/profile/' + profileUrl)
+    .where('url', url)
     .select('users.id', 'users.name', 'users.email', 'users.user_type', 'profiles.url', 'profiles.picture_url', 'logins.password')
 }
 
-function addUser (name, email, userType, url, pictureUrl, password, connection) {
-  return addUserInfo(name, email, userType, connection)
+function addUser (newUser, connection) {
+  return addUserInfo(newUser.name, newUser.email, newUser.userType, connection)
     .then(userId => {
       userId = userId[0]
-      addProfileInfo(userId, '/profile/' + url, pictureUrl, connection)
+      addProfileInfo(userId, newUser.url, newUser.pictureUrl, connection)
         .then(() => {
-          addLoginInfo(userId, password, connection)
+          addLoginInfo(userId, newUser.password, connection)
             .then()
         })
     })
@@ -96,8 +96,7 @@ function addBlogPost (userId, title, content, connection) {
     .insert({user_id: userId, title: title, content: content})
 }
 
-
-function getAllPosts (connection){
+function getAllPosts (connection) {
   return connection('posts')
     .select()
 }
