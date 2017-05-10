@@ -17,7 +17,6 @@ router.get('/', function (req, res) {
 router.get('/profile/:profileurl', function (req, res) {
   db.getProfile(req.params.profileurl, req.app.get('connection'))
     .then(function (profiles) {
-      console.log(req.query.password)
       let viewData = profiles[0]
       viewData.login = req.query.password === profiles[0].password
       viewData.wrongPassword = req.query.password !== profiles[0].password && req.query.password !== undefined
@@ -33,6 +32,25 @@ router.post('/login/profile/:profileurl', function (req, res) {
   db.getProfile(req.params.profileurl, req.app.get('connection'))
     .then(function (profiles) {
       res.redirect('/profile/' + req.params.profileurl + '?password=' + req.body.password)
+    })
+})
+
+router.get('/adduser/profile/:profileurl', function (req, res) {
+  db.getProfile(req.params.profileurl, req.app.get('connection'))
+    .then(function (profiles) {
+      let viewData = profiles[0]
+      viewData.randomkitty = 'http://placekitten.com/400/4' + Math.floor(Math.random() * 50)
+      viewData.login = req.query.password === profiles[0].password
+      viewData.wrongPassword = req.query.password !== profiles[0].password && req.query.password !== undefined
+      viewData.admin = profiles[0].user_type === 'admin'
+      res.render('add', viewData)
+    })
+})
+
+router.post('/adduser', function (req, res) {
+  db.addUser(req.body.name, req.body.email, req.body.user_type, req.body.url, req.body.picture_url, req.body.password, req.app.get('connection'))
+    .then(function () {
+      res.redirect('/')
     })
 })
 

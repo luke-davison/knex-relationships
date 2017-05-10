@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add a new user</title>
+  </head>
+  <body>
+    <form action="/adduser" method="post">
+      <h1>New User</h1>
+      {{#if login}}
+        {{#if admin}}
+          <p>Name: <input type="text" name="name" value=""></p>
+          <p>Email: <input type="text" name="email" value=""></p>
+          <p>Url: <input type="text" name="url" value=""></p>
+          <p>Type: <input type="text" name="user_type" value="user">
+          <p>Password: <input type="text" name="password" value="">
+          <p>Picture: <input type="text" name="picture_url" value="{{randomkitty}}"></p>
+          <p><input type="submit" name="" value="Add New User">
+          <p><img src={{randomkitty}}></img></p>
+        {{else}}
+          <p>You are not authorised to do this</p>
+        {{/if}}
+        {{> menu}}
+      {{else}}
+        <p>Please log in first</p>
+      {{/if}}
+    </form>
+  </body>
+</html>
