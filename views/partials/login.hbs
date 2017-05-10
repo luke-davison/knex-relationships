@@ -1,4 +1,10 @@
-<form id="loginform" action="{{url}}" method="post">
-  <input id="passwordfield" type="text" name="password" value="password">
+<form id="loginform" action="/login{{url}}" method="post">
+  <input id="passwordfield" type="text" name="password" value="">
   <input id="loginsubmitbutton" type="submit" name="" value="Login">
 </form>
+{{#if wrongPassword}}
+  <p>You entered an incorrect password</p>
+{{else}}
+  <p>Please login to make changes</p>
+{{/if}}
+<p><a href ='/'>Back to index page</a></p>

@@ -1,1 +1,5 @@
-Menu goes here
+<p>You are logged in as {{name}}</p>
+<p><a href ='/'>Back to index page</a></p>
+{{#if admin}}
+  <p><a href ='/addUser'>Add a new user</a></p>
+{{/if}}

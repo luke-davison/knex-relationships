@@ -17,9 +17,11 @@ router.get('/', function (req, res) {
 router.get('/profile/:profileurl', function (req, res) {
   db.getProfile(req.params.profileurl, req.app.get('connection'))
     .then(function (profiles) {
+      console.log(req.query.password)
       let viewData = profiles[0]
-      viewData.login = req.query.login === 'true'
-      viewData.wrongPassword = req.query.login === 'wrong'
+      viewData.login = req.query.password === profiles[0].password
+      viewData.wrongPassword = req.query.password !== profiles[0].password && req.query.password !== undefined
+      viewData.admin = profiles[0].user_type === 'admin'
       res.render('profile', viewData)
     })
     .catch(function (err) {
@@ -27,16 +29,10 @@ router.get('/profile/:profileurl', function (req, res) {
     })
 })
 
-router.post('/profile/:profileurl', function (req, res) {
-  console.log('hi')
-  db.getLogin(req.params.profileurl, req.app.get('connection'))
+router.post('/login/profile/:profileurl', function (req, res) {
+  db.getProfile(req.params.profileurl, req.app.get('connection'))
     .then(function (profiles) {
-
-      if (req.body.password === profiles[0].password) {
-        res.redirect('/profile/' + req.params.profileurl + '?login=true')
-      } else {
-        res.redirect('/profile/' + req.params.profileurl + '?login=wrong')
-      }
+      res.redirect('/profile/' + req.params.profileurl + '?password=' + req.body.password)
     })
 })
 
