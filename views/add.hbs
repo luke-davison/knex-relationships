@@ -5,7 +5,7 @@
     <title>Add a new user</title>
   </head>
   <body>
-    <form action="/adduser" method="post">
+    <form action="/adduser{{url}}?password={{password}}" method="post">
       <h1>New User</h1>
       {{#if login}}
         {{#if admin}}

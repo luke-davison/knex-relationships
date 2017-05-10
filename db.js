@@ -4,6 +4,10 @@ module.exports = {
   getUsers: getUsers,
   getProfile: getProfile,
   addUser: addUser,
+  deleteUser: deleteUser,
+  addBlogPost: addBlogPost,
+  getAllPosts: getAllPosts,
+  getOnePost: getOnePost
 }
 
 function getUsers (connection) {
@@ -15,6 +19,12 @@ function getUsers (connection) {
 
 function getUser (id, connection) {
   return connection('users').where('id', id)
+}
+
+function getOnePost(id, connection){
+  return connection('posts')
+  .join('users','posts.user_id','users.id')
+  .where('posts.id', id)
 }
 
 function getProfile (profileUrl, connection) {
@@ -50,4 +60,44 @@ function addProfileInfo (userId, url, pictureUrl, connection) {
 function addLoginInfo (userId, password, connection) {
   return connection('logins')
     .insert({user_id: userId, password: password})
+}
+
+function deleteUser (userId, connection) {
+  return deleteLoginInfo(userId, connection)
+    .then(() => {
+      deleteProfileInfo(userId, connection)
+        .then(() => {
+          deleteUserInfo(userId, connection)
+            .then()
+        })
+    })
+}
+
+function deleteLoginInfo (userId, connection) {
+  return connection('logins')
+    .where('user_id', userId)
+    .del()
+}
+
+function deleteProfileInfo (userId, connection) {
+  return connection('profiles')
+    .where('user_id', userId)
+    .del()
+}
+
+function deleteUserInfo (userId, connection) {
+  return connection('users')
+    .where('id', userId)
+    .del()
+}
+
+function addBlogPost (userId, title, content, connection) {
+  return connection('posts')
+    .insert({user_id: userId, title: title, content: content})
+}
+
+
+function getAllPosts (connection){
+  return connection('posts')
+    .select()
 }
