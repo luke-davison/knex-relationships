@@ -6,7 +6,10 @@ module.exports = {
 }
 
 function getUsers (connection) {
-  return connection('users').select()
+  return connection('users')
+    .join('profiles','users.id','profiles.user_id')
+    .select()
+
 }
 
 function getUser (id, connection) {
