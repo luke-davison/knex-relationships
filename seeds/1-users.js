@@ -3,7 +3,7 @@ exports.seed = function (knex, Promise) {
     .then(function () {
       return Promise.all([
         knex('users').insert({id: 99901, name: 'Ambitious Aardvark', email: 'aardvark@example.org', user_type: 'admin'}),
-        knex('users').insert({id: 99902, name: 'Bamboozled Baboon', email: 'baboon@example.org', user_type: 'user'}),
+        knex('users').insert({id: 99902, name: 'Bamboozled Baboon', email: 'baboon@example.org', user_type: 'admin'}),
         knex('users').insert({id: 99903, name: 'Curious Capybara', email: 'capybara@example.org', user_type: 'user'}),
         knex('users').insert({id: 99904, name: 'Dilapidated Duck', email: 'duck@example.org', user_type: 'user'}),
         knex('users').insert({id: 99905, name: 'Exuberant Elephant', email: 'elephant@example.org', user_type: 'user'}),

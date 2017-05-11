@@ -36,14 +36,14 @@ function getProfile (url, connection) {
 }
 
 function addUser (newUser, connection) {
+  var userId
   return addUserInfo(newUser.name, newUser.email, newUser.userType, connection)
-    .then(userId => {
-      userId = userId[0]
-      addProfileInfo(userId, newUser.url, newUser.pictureUrl, connection)
-        .then(() => {
-          addLoginInfo(userId, newUser.password, connection)
-            .then()
-        })
+    .then(result => {
+      userId = result[0]
+      return addProfileInfo(userId, newUser.url, newUser.pictureUrl, connection)
+    })
+    .then(() => {
+      return addLoginInfo(userId, newUser.password, connection)
     })
 }
 
@@ -65,11 +65,10 @@ function addLoginInfo (userId, password, connection) {
 function deleteUser (userId, connection) {
   return deleteLoginInfo(userId, connection)
     .then(() => {
-      deleteProfileInfo(userId, connection)
-        .then(() => {
-          deleteUserInfo(userId, connection)
-            .then()
-        })
+      return deleteProfileInfo(userId, connection)
+    })
+    .then(() => {
+      return deleteUserInfo(userId, connection)
     })
 }
 
